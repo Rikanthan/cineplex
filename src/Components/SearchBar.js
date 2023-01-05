@@ -1,6 +1,7 @@
 import { FormControl, InputGroup } from "react-bootstrap";
+import { Search } from "react-bootstrap-icons";
 
-export default function SearchBar(Search){
+export default function SearchBar(search){
     return(
         <div className="container h-100">
             <div className="row h-100 justify-content-center align-items-center">
@@ -11,6 +12,9 @@ export default function SearchBar(Search){
                       onChange={(e)=>{
                         search.onSearch(e);
                       }}/>
+                      <Button variant="outline-secondary" id="button-addon2">
+                        <Search/>
+                      </Button>
                 </InputGroup>
             </div>
         </div>
