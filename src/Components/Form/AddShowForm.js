@@ -1,13 +1,12 @@
 import { useContext, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
-import 'react-toastify/dist/react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 import { FilmContext } from "../../Context/FilmContext";
-import { FilmService } from "../../Service/FilmService";
+ import  FilmService from "../../Service/FilmService";
 import TextField from "./InputField";
 import TextArea from "./TextAreaField";
 import CustomDatePicker from "./DateTimePicker";
-import { Form } from "react-bootstrap";
-import { Button } from "bootstrap";
+import {Button, Form } from "react-bootstrap";
 export default function AddShow() {
     const [film, setFilm] = useState({
         availableSeats: "",
@@ -37,7 +36,7 @@ export default function AddShow() {
     }
     return (
         <div>
-            <Form>
+            <Form className="mb-3">
                 <TextField saveName={(e) => handle(e)} name={film.name} />
                 <TextArea saveDescription={(e) => handle(e)} description={film.description} />
                 <CustomDatePicker saveDate={(e) => handle(e)} date={film.date}

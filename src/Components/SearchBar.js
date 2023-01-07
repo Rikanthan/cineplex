@@ -1,4 +1,4 @@
-import { FormControl, InputGroup } from "react-bootstrap";
+import { Button, FormControl, InputGroup } from "react-bootstrap";
 import { Search } from "react-bootstrap-icons";
 
 export default function SearchBar(search){

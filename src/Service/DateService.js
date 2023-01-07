@@ -1,4 +1,4 @@
-export default new class DateService{
+ class DateService{
     formatDateTime(string){
         let options = {year: 'numeric',month: 'long', day: 'numeric',hour: 'numeric',minute:'numeric',second: 'numeric'};
         return new Date(string).toLocaleDateString([],options);
@@ -38,3 +38,4 @@ export default new class DateService{
         return [hours,minutes,seconds].join(':');
     }
 }
+export default new DateService

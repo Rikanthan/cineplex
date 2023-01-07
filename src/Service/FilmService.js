@@ -1,7 +1,7 @@
 import axios from "axios";
 import DateService from "./DateService";
 const url = "http://localhost:8080/api/v1/film"
-export default new class FilmService{
+ class FilmService{
     getAllFilms(){
         return axios.get(url)
     }
@@ -50,3 +50,5 @@ export default new class FilmService{
     }
 
 }
+
+export default new FilmService()

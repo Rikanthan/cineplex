@@ -14,11 +14,19 @@ export default function Film({ film, onClick }) {
     const [update, setUpdate] = useState(false)
     const { dispatchFilmEvent } = useContext(FilmContext);
     useEffect(() => {
+        let isCancelled = false;
         async function getAvailableSeats() {
             await SeatService.countAvailableSeats(film.id)
                 .then((res) => {
-                    setCount(res.data)
-                })
+                    if(res.status === 200 && !isCancelled ){
+                        setCount(res.data)
+                    }else{
+                        console.log(res.data)
+                    }
+                }).catch((error) =>console.log(error))
+                return()=>{
+                    isCancelled = true;
+                }
         }
         getAvailableSeats()
     }, [])
