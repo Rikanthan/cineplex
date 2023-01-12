@@ -5,15 +5,16 @@ import { FilmContext } from "../../Context/FilmContext";
  import  FilmService from "../../Service/FilmService";
 import TextField from "./InputField";
 import TextArea from "./TextAreaField";
+import dayjs from 'dayjs';
 import CustomDatePicker from "./DateTimePicker";
 import {Button, Form } from "react-bootstrap";
+import BasicTimePicker from "./TimePicker";
 export default function AddShow() {
     const [film, setFilm] = useState({
         availableSeats: "",
         description: "",
         name: "",
-        date: "",
-        time: ""
+        showDateTime: dayjs('2023-01-13')
     });
     const { dispatchFilmEvent } = useContext(FilmContext);
     function submit(e) {
@@ -24,7 +25,7 @@ export default function AddShow() {
                     toast.success("New Show added successfully!", { autoClose: 600 });
                 }
                 else {
-                    toast.error("Somethine went wrong", { autoClose: 600 })
+                    toast.error("Something went wrong", { autoClose: 600 })
                 }
             })
     }
@@ -34,13 +35,19 @@ export default function AddShow() {
         newFilm[e.target.id] = e.target.value
         setFilm(newFilm)
     }
+    function saveDateTime(e) {
+        const newFilm = {...film};
+        newFilm["showDateTime"] = e
+        setFilm(newFilm)
+    }
     return (
         <div>
             <Form className="mb-3">
                 <TextField saveName={(e) => handle(e)} name={film.name} />
                 <TextArea saveDescription={(e) => handle(e)} description={film.description} />
-                <CustomDatePicker saveDate={(e) => handle(e)} date={film.date}
-                    saveTime={(e) => handle(e)} time={film.time} />
+                {/* <CustomDatePicker saveDate={(e) => handle(e)} date={film.date}
+                    saveTime={(e) => handle(e)} time={film.time} /> */}
+                <BasicTimePicker onChange={(e) => saveDateTime(e)}/>    
                 <Form.Label>Enter total Seats</Form.Label>
                 <Form.Control id='availableSeats' type='number'
                     placeholder="Enter total seats" min="10" max="30" onChange={(e) => handle(e)} />

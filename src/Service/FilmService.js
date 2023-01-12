@@ -31,7 +31,7 @@ const url = "http://localhost:8080/api/v1/film"
             availableSeats: film.availableSeats,
             description: film.description,
             name: film.name,
-            showDateTime: film.date+ " "+film.time
+            showDateTime: film.showDateTime
         })
     }
 

@@ -38,4 +38,4 @@
         return [hours,minutes,seconds].join(':');
     }
 }
-export default new DateService
+export default new DateService()
