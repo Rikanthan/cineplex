@@ -1,12 +1,7 @@
 import axios from "axios";
 const url = "http://localhost:8080/api/v1/seat";
 class SeatService{
-    getSeatsForSpecificShow(showId){
-        return axios.get(url+"?showId="+showId,{ 
-            headers: {"Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"}
-    });
-    }
+    
     bookSeat(seat){
         return axios.put(url+`/booking?showId=${seat.showId}&seatNo=&{seat.seatNo}`
         ,{ headers: {
@@ -23,6 +18,9 @@ class SeatService{
             'Content-Type': 'application/json,text/plain',
             "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"}
     })
+    }
+    getSeatsForSpecificShow(showId){
+        return axios.get(url+"?showId="+showId);
     }
 }
 export default new SeatService()
