@@ -1,11 +1,9 @@
 import { useContext, useEffect, useState } from "react";
-import { Button, Col, Form, Row } from "react-bootstrap";
+import { Col, Form, Row } from "react-bootstrap";
 import { SeatContext } from "../../Context/SeatContext";
 import DateService from "../../Service/DateService";
 import SeatService from "../../Service/SeatService";
-import GetSeats from "../../Service/GetSeats";
 import ShowAlert from "../AlertBox";
-
 import Seat from "./Seat";
 
 export default function Show({ film }) {
@@ -14,10 +12,9 @@ export default function Show({ film }) {
     let [count, setCount] = useState(0);
     const [seatKey, setSeatKey] = useState([]);
     const { seats, dispatchSeatEvent } = useContext(SeatContext);
-    //const seatService = new SeatService();
     useEffect(() => {
         let isCancelled = false;
-        GetSeats(film.id)
+        SeatService.getSeatsForSpecificShow(film.id)
             .then((res) => {
                 if (res.status === 200 && !isCancelled) {
                     dispatchSeatEvent('ADD_SEATS', { newSeat: res.data });
@@ -44,7 +41,7 @@ export default function Show({ film }) {
             <Row xs="5" className="justify-content-sm-center">
                 {seats.map((element, index) => (  
                   <Col>
-                  <Seat prop={index}
+                  <Seat
                       seat={element}
                       click={(e) => {
                           setAlert(true)

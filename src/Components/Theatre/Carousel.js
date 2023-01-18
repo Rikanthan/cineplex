@@ -6,7 +6,7 @@ export default function Seats({film}){
         <div>
             <Carousel>
                 {film.map(element => (
-                    <Carousel.Item>
+                    <Carousel.Item key={element.id}>
                         <Show 
                         film={element}/>
                     </Carousel.Item>

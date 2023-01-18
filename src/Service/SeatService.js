@@ -3,7 +3,7 @@ const url = "http://localhost:8080/api/v1/seat";
 class SeatService{
     
     bookSeat(seat){
-        return axios.put(url+`/booking?showId=${seat.showId}&seatNo=&{seat.seatNo}`
+        return axios.put(url+`/booking?showId=${seat.showId}&seatNo=${seat.seatNo}`
         ,{ headers: {
             'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*'

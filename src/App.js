@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import FilmService from './Service/FilmService';
 import { FilmContext } from './Context/FilmContext';
 import { SeatContext } from './Context/SeatContext';
@@ -69,11 +69,12 @@ function App() {
         return;
     }
   }
-
+  const filmProviderValue = useMemo(()=> ({films,dispatchFilmEvent}),[films,dispatchFilmEvent]);
+  const seatProviderValue = useMemo(()=> ({seats,dispatchSeatEvent}),[seats,dispatchSeatEvent])
   return (
     <div className="App">
-      <FilmContext.Provider value={{ films, dispatchFilmEvent }}>
-        <SeatContext.Provider value={{ seats, dispatchSeatEvent }}>
+      <FilmContext.Provider value={filmProviderValue}>
+        <SeatContext.Provider value={seatProviderValue}>
         <NavigationBar url={logo} />
           <header className="App-header"> 
             <Router>
