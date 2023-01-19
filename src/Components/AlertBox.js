@@ -1,5 +1,5 @@
 import { ToggleButton, Button, Modal, ButtonGroup } from "react-bootstrap";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 export default function ShowAlert(props) {
 
@@ -12,9 +12,9 @@ export default function ShowAlert(props) {
         { name: '5', value: 5 }
     ];
 
-    function handle(e){ 
-        setRadioValue(e.target.value)
-        }
+        const handle = useCallback((e)=>{
+            setRadioValue(e.tartget.value)
+        },[])
     return (
         <Modal
             {...props}
@@ -33,7 +33,7 @@ export default function ShowAlert(props) {
                 <ButtonGroup>
                     {radios.map((radio, idx) => (
                         <ToggleButton
-                            key={idx}
+                            key={radioValue}
                             id={`radio-${idx}`}
                             type="radio"
                             variant={radioValue === ++idx ? 'success' : 'outline-success'}
