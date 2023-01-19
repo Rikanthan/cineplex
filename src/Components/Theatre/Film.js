@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { Button, Card } from "react-bootstrap";
 import { toast, ToastContainer } from "react-toastify";
 import { FilmContext } from "../../Context/FilmContext";
@@ -29,7 +29,34 @@ export default function Film({ film, onClick }) {
                 }
         }
         getAvailableSeats()
-    }, [])
+    }, [film.hideAlert])
+
+    const hideAlert = useCallback(()=>{
+        setAlert(false)
+    },[])
+
+    const clickEdit = useCallback(()=>{
+        setUpdate(true)
+    },[])
+
+    const clickDelete = useCallback(()=>{
+        setAlert(true)
+    },[])
+
+    const deleteFilm = useCallback(()=>{
+        FilmService.deleteFilmById(film.id)
+                    .then((res)=>{
+                        if(res.status === 200){
+                            dispatchFilmEvent('DELETE_FILM',{filmId: film.id})
+                            toast.success("Film Deleted successfully!",{autoClose:600})
+                        }
+                        else{
+                            toast.error("Film deleted failed!",{autoClose: 500})
+                        }
+               })
+               setAlert(false)
+    },[film.id])
+
     return (
         <div>
             <Card bg="light" border="primary" text="dark" style={{ margin: 10 }}>
@@ -48,31 +75,19 @@ export default function Film({ film, onClick }) {
                         Available Seats : {count}
                     </Card.Text>
                     <Button variant="dark" onClick={onClick}>View Seats</Button>
-                    <Button variant="primary" onClick={() => { setUpdate(true) }}>Edit</Button>
-                    <Button variant="danger" onClick={() => { setAlert(true) }}>Delete</Button>
+                    <Button variant="primary" onClick={clickEdit}>Edit</Button>
+                    <Button variant="danger" onClick={clickDelete}>Delete</Button>
                 </Card.Body>
             </Card>
             {alert ? <ShowAlert
                show = {alert}
-               onHide = {() => setAlert(false)}
-               onSubmit={()=> {
-                FilmService.deleteFilmById(film.id)
-                    .then((res)=>{
-                        if(res.status === 200){
-                            dispatchFilmEvent('DELETE_FILM',{filmId: film.id})
-                            toast.success("Film Deleted successfully!",{autoClose:600})
-                        }
-                        else{
-                            toast.error("Film deleted failed!",{autoClose: 500})
-                        }
-               })
-               setAlert(false)
-            }}
+               onHide = {hideAlert}
+               onSubmit={deleteFilm}
             msg={"Do you want to delete this film?"}/>: null}
             {
                 update ? <UpdateShow
                 shw = {update}
-                onHide = {()=> {setUpdate(false)}}
+                onHide = {hideAlert}
                 props = {film}/> : null
             }
             <ToastContainer position="bottom-center"/>
